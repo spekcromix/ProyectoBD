@@ -49,4 +49,10 @@ $(document).ready(function() {
 		})
 	})
 
+	$(document).on('click',".btnUs",function() {
+		var nombre=$(this).parent().parent().children('td:eq(0)').text();
+		window.location = 'db.php?name='+nombre;
+		
+	})
+
 });
