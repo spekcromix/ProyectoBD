@@ -74,15 +74,34 @@
 	}
 
 	if($_POST['metodo'] == '6'){
-		$sql = "USE $_POST[nombreB]";
+		$nombreB = $_POST["nombreB"];
+		$nombreT = $_POST["nombreT"];
+		$nombre =  $_POST["nombre"];
+		$tipo = $_POST["tipo"];
+		$longitud = $_POST["longitud"];
+		$estado = $_POST["estado"];
+		$indice = $_POST["indice"];
+
+		$sql = "USE $nombreB";
 		if($res=$con->query($sql)){
-			$sql = "CREATE TABLE $_POST[nombreT] ($_POST[nombre] $_POST[tipo]($_POST[longitud]) $_POST[estado] $_POST[indice]) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci";
+			$sql = "CREATE TABLE $nombreT (";
+			
+			for ($i=0; $i<count($nombre); $i++) {
+				//echo $nombre[$i];
+				$sql .= "$nombre[$i] $tipo[$i]($longitud[$i]) $estado[$i] $indice[$i]";
+				if($i == count($nombre)-2){
+					$sql .= ",";
+				}
+			}
+
+			$sql .= ")";
 			if($con->query($sql)){
-			   echo "Tabla $_POST[nombreT] creada";
+			   echo "Tabla $nombreT creada";
 			}else{
 			    echo "Error: ".mysqli_error($con);
 			}
-			$con->close();
 		}
+		
+		$con->close();
 	}
 ?>
